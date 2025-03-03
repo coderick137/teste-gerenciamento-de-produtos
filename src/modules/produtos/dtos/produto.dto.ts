@@ -1,16 +1,71 @@
-import { z } from 'zod';
+import {
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsNumber,
+  Min,
+} from 'class-validator';
+import { Type } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 
-export const ProdutoSchema = z
-  .object({
-    codigo: z.string().min(1, 'Código do produto é obrigatório'),
-    nome: z.string().min(3, 'Nome do produto é obrigatório'),
-    codigo_barras: z.string().optional(),
-    quantidade: z.number().min(0, 'Quantidade do produto é obrigatória'),
-    preco: z.number().min(0, 'Preço do produto é obrigatório'),
+export class CreateProdutoDto {
+  @ApiProperty({ description: 'Código do produto' })
+  @IsString()
+  @IsNotEmpty({ message: 'Código do produto é obrigatório' })
+  codigo: string;
+
+  @ApiProperty({ description: 'Nome do produto' })
+  @IsString()
+  @IsNotEmpty({ message: 'Nome do produto é obrigatório' })
+  nome: string;
+
+  @ApiProperty({ description: 'Código de barras do produto', required: false })
+  @IsString()
+  @IsOptional()
+  codigo_barras?: string;
+
+  @ApiProperty({ description: 'Quantidade do produto', minimum: 0 })
+  @IsNumber()
+  @Type(() => Number)
+  @Min(0, { message: 'Quantidade do produto é obrigatória' })
+  quantidade: number;
+
+  @ApiProperty({ description: 'Preço do produto', minimum: 0 })
+  @IsNumber()
+  @Type(() => Number)
+  @Min(0, { message: 'Preço do produto é obrigatório' })
+  preco: number;
+}
+
+export class UpdateProdutoDto {
+  @ApiProperty({ description: 'Código do produto', required: false })
+  @IsString()
+  @IsOptional()
+  codigo?: string;
+
+  @ApiProperty({ description: 'Nome do produto', required: false })
+  @IsString()
+  @IsOptional()
+  nome?: string;
+
+  @ApiProperty({ description: 'Código de barras do produto', required: false })
+  @IsString()
+  @IsOptional()
+  codigo_barras?: string;
+
+  @ApiProperty({
+    description: 'Quantidade do produto',
+    minimum: 0,
+    required: false,
   })
-  .required();
+  @IsNumber()
+  @Type(() => Number)
+  @Min(0, { message: 'Quantidade do produto é obrigatória' })
+  quantidade?: number;
 
-export type ProdutoDto = z.infer<typeof ProdutoSchema>;
-export type UpdateProdutoDto = z.infer<
-  ReturnType<(typeof ProdutoSchema)['partial']>
->;
+  @ApiProperty({ description: 'Preço do produto', minimum: 0, required: false })
+  @IsNumber()
+  @Type(() => Number)
+  @Min(0, { message: 'Preço do produto é obrigatório' })
+  preco?: number;
+}
