@@ -8,6 +8,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import configuration from '../../config/configuration';
 const config = configuration();
+
 @Module({
   imports: [
     TypeOrmModule.forFeature([Produtos]),

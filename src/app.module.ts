@@ -27,7 +27,6 @@ dotenv.config();
       entities: [Produtos, Usuario],
       synchronize: true,
     }),
-    // TypeOrmModule.forFeature([Usuario, Produtos]),
     ProdutosModule,
     UsuarioModule,
     AuthModule,

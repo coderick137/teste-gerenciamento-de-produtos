@@ -45,7 +45,6 @@ export class ProdutosService {
         `Produto com código ${codigo} não encontrado`,
       );
     }
-    // Atualiza o produto pelo código
     const updatedProduto = await this.produtosRepository.preload({
       ...produto,
       ...updateProdutoDto,

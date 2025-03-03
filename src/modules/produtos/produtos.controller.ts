@@ -19,7 +19,6 @@ import { ProdutosService } from './produtos.service';
 import { CreateProdutoDto, UpdateProdutoDto } from './dtos/produto.dto';
 import { Produtos } from './entities/produtos.entity';
 import { AuthGuard } from '../../auth/auth.guard';
-import { Public } from '../../auth/decorators/public.decorator';
 
 @ApiTags('produtos')
 @Controller('produtos')
@@ -36,18 +35,16 @@ export class ProdutosController {
     return this.produtosService.create(createProdutoDto);
   }
 
-  @Public()
   @Get()
   @ApiOperation({ summary: 'Listar todos os produtos' })
   @ApiResponse({
     status: 200,
     description: 'Lista de produtos retornada com sucesso.',
   })
-  findAll(): Promise<CreateProdutoDto[]> {
+  findAll(): Promise<Produtos[]> {
     return this.produtosService.findAll();
   }
 
-  @Public()
   @Get(':codigo')
   @ApiOperation({ summary: 'Obter um produto pelo código' })
   @ApiResponse({ status: 200, description: 'Produto retornado com sucesso.' })
