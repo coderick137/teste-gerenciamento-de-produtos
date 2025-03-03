@@ -7,11 +7,18 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { ProdutosService } from './produtos.service';
 import { CreateProdutoDto, UpdateProdutoDto } from './dtos/produto.dto';
 import { Produtos } from './entities/produtos.entity';
+import { JwtAuthGuard } from '../../auth/auth.guard';
 
 @ApiTags('produtos')
 @Controller('produtos')
@@ -19,6 +26,8 @@ export class ProdutosController {
   constructor(private readonly produtosService: ProdutosService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Criar um novo produto' })
   @ApiResponse({ status: 201, description: 'Produto criado com sucesso.' })
   @ApiResponse({ status: 400, description: 'Dados inválidos.' })
@@ -45,6 +54,8 @@ export class ProdutosController {
   }
 
   @Put(':codigo')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Atualizar um produto pelo código' })
   @ApiResponse({ status: 200, description: 'Produto atualizado com sucesso.' })
   @ApiResponse({ status: 404, description: 'Produto não encontrado.' })
@@ -56,6 +67,8 @@ export class ProdutosController {
   }
 
   @Delete(':codigo')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Remover um produto pelo código' })
   @ApiResponse({ status: 200, description: 'Produto removido com sucesso.' })
   @ApiResponse({ status: 404, description: 'Produto não encontrado.' })
