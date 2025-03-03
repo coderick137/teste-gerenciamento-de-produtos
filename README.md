@@ -65,7 +65,6 @@ Esta é uma API REST desenvolvida em NestJS para gerenciar um CRUD de produtos. 
 
 3. Acesse a API em:
 
-   - API: <http://localhost:3000>
    - Swagger UI: <http://localhost:3000/api>
 
 4. Para parar os contêineres, execute:
@@ -251,12 +250,7 @@ Authorization: Bearer <TOKEN_JWT>
 HTTP/1.1 204 No Content
 ```
 
-## Contribuição
+### Aplicação feita por
 
-Contribuições são bem-vindas! Siga os passos abaixo:
-
-1. Faça um fork do projeto.
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`).
-3. Commit suas alterações (`git commit -m 'Adiciona nova feature'`).
-4. Push para a branch (`git push origin feature/nova-feature`).
-5. Abra um Pull Request.
+- Linkedin: [Ricardo Anjos](https://www.linkedin.com/in/ricardoanjosn/)
+- WhatsApp: 61 994215316
