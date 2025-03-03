@@ -7,11 +7,16 @@ import * as dotenv from 'dotenv';
 import { UsuarioModule } from './modules/usuario/usuario.module';
 import { Usuario } from './modules/usuario/entities/usuario.entity';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
+import configuration from './config/configuration';
 
 dotenv.config();
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      load: [configuration],
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DATABASE_HOST,
@@ -22,7 +27,7 @@ dotenv.config();
       entities: [Produtos, Usuario],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([Usuario, Produtos]),
+    // TypeOrmModule.forFeature([Usuario, Produtos]),
     ProdutosModule,
     UsuarioModule,
     AuthModule,

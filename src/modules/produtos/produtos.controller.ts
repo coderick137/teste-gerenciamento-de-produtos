@@ -18,7 +18,8 @@ import {
 import { ProdutosService } from './produtos.service';
 import { CreateProdutoDto, UpdateProdutoDto } from './dtos/produto.dto';
 import { Produtos } from './entities/produtos.entity';
-import { JwtAuthGuard } from '../../auth/auth.guard';
+import { AuthGuard } from '../../auth/auth.guard';
+import { Public } from '../../auth/decorators/public.decorator';
 
 @ApiTags('produtos')
 @Controller('produtos')
@@ -26,7 +27,7 @@ export class ProdutosController {
   constructor(private readonly produtosService: ProdutosService) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Criar um novo produto' })
   @ApiResponse({ status: 201, description: 'Produto criado com sucesso.' })
@@ -35,6 +36,7 @@ export class ProdutosController {
     return this.produtosService.create(createProdutoDto);
   }
 
+  @Public()
   @Get()
   @ApiOperation({ summary: 'Listar todos os produtos' })
   @ApiResponse({
@@ -45,6 +47,7 @@ export class ProdutosController {
     return this.produtosService.findAll();
   }
 
+  @Public()
   @Get(':codigo')
   @ApiOperation({ summary: 'Obter um produto pelo código' })
   @ApiResponse({ status: 200, description: 'Produto retornado com sucesso.' })
@@ -54,7 +57,7 @@ export class ProdutosController {
   }
 
   @Put(':codigo')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Atualizar um produto pelo código' })
   @ApiResponse({ status: 200, description: 'Produto atualizado com sucesso.' })
@@ -67,7 +70,7 @@ export class ProdutosController {
   }
 
   @Delete(':codigo')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Remover um produto pelo código' })
   @ApiResponse({ status: 200, description: 'Produto removido com sucesso.' })
